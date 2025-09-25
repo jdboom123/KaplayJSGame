@@ -10,6 +10,7 @@ export function addFollowEnemy(k, player){
         "enemy",
         area(),
         health(60),
+        body(),
         {
             add(){
                 this.onDeath(()=>{
@@ -20,6 +21,9 @@ export function addFollowEnemy(k, player){
                 });
                 this.onUpdate(() =>{
                     this.moveTo(player.pos, 100);
+                })
+                this.onCollide("player", (p)=>{
+                    player.hurt(10);
                 })
 
             }

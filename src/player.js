@@ -11,8 +11,14 @@ export function addPlayer(k, posX, posY, playerSprite){
         pos(posX, posY),
         sprite(playerSprite),
         anchor("center"),
+        "player",
+        health(100),
+        area(),
+        body(),
         {
             add(){
+                let invincible = false;
+
                 this.onKeyDown("a", () =>{
                     this.move(LEFT);
                     console.log("moved left")
@@ -32,6 +38,14 @@ export function addPlayer(k, posX, posY, playerSprite){
                 this.onKeyPress("space", () =>{
                     addKaboom(this.pos)
                 });
+                this.onHurt((damage)=>{
+                    if (invincible == false){
+                        console.log("Ow");
+                        invincible = true;
+                    }
+                })
+
+                //TODO: add state logic
             }
         }
 
