@@ -1,0 +1,4 @@
+9/26/2025
+- Issue with the player's health. Through a misunderstanding of the hurt funtion, the player will
+be hurt without a invincibility timer. Trying to find a way to not use the hurt function by
+trying to make another function that will check if the player is invincible.

@@ -15,37 +15,55 @@ export function addPlayer(k, posX, posY, playerSprite){
         health(100),
         area(),
         body(),
+        state("normal", ["normal", "damage","invincible"]),
         {
             add(){
-                let invincible = false;
-
                 this.onKeyDown("a", () =>{
                     this.move(LEFT);
-                    console.log("moved left")
+                    // console.log("moved left")
                 });
                 this.onKeyDown("d", () =>{
                     this.move(RIGHT);
                 });
                 this.onKeyDown("w", () =>{
                     this.move(UP);
-                    console.log("moved up")
+                    // console.log("moved up")
                 });
                 this.onKeyDown("s", () =>{
                     this.move(DOWN);
-                    console.log("moved down")
+                    // console.log("moved down")
                 });
+
                 // Gun functionality
                 this.onKeyPress("space", () =>{
                     addKaboom(this.pos)
                 });
-                this.onHurt((damage)=>{
-                    if (invincible == false){
-                        console.log("Ow");
-                        invincible = true;
-                    }
-                })
+                this.onHurt((damage, enemyPos)=>{
+                    console.log(this.state)
+                    // if (this.state == "normal"){
+                        // this.health -= damage;
+                    this.enterState("damage", (enemyPos));
+                    // }
+                    // else{
+                        // console.log("Im okay")
+                    // }
+                });
 
-                //TODO: add state logic
+                // States
+                this.onStateEnter("damage", (enemyPos)=>{
+                    // console.log("Entered damage");
+                    console.log(enemyPos)
+                    this.enterState("invincible");
+                });
+                this.onStateEnter("invincible", ()=>{
+                    // console.log("invincible");
+                    wait(200, ()=>this.enterState("normal"));
+                });
+
+                // this.onDeath(()=>{
+                //     k.go("end");
+                // })
+
             }
         }
 

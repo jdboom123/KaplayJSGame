@@ -16,15 +16,14 @@ export function addFollowEnemy(k, player){
                 this.onDeath(()=>{
                     destroy(this);
                 });
-                this.onHurt((bulletDamage) =>{
-                    this.health -= bulletDamage;
-                });
                 this.onUpdate(() =>{
                     this.moveTo(player.pos, 100);
+
+                    if(this.isColliding(player)){
+                        player.hurt(10, this.pos)
+                    }
                 })
-                this.onCollide("player", (p)=>{
-                    player.hurt(10);
-                })
+
 
             }
         }
