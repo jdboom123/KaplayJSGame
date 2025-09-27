@@ -1,0 +1,6 @@
+9/27/2025
+- Fixed state diagram of player, will now take damage accordingly
+- Fixed game over screen logic
+- Added indicators for player health and the health of enemies
+- Added an enemyDamage map and function to map what kind of damage the player gets
+- Added infinite spawner for enemies (cap at 8 enemies)

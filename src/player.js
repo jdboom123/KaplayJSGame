@@ -16,8 +16,13 @@ export function addPlayer(k, posX, posY, playerSprite){
         area(),
         body(),
         state("normal", ["normal", "damage","invincible"]),
+
+        // Can change if you want to add sprites
+        color(0,255,0),
         {
             add(){
+                this.setMaxHP(100);
+
                 this.onKeyDown("a", () =>{
                     this.move(LEFT);
                     // console.log("moved left")
@@ -38,31 +43,31 @@ export function addPlayer(k, posX, posY, playerSprite){
                 this.onKeyPress("space", () =>{
                     addKaboom(this.pos)
                 });
-                this.onHurt((damage, enemyPos)=>{
-                    console.log(this.state)
-                    // if (this.state == "normal"){
-                        // this.health -= damage;
-                    this.enterState("damage", (enemyPos));
-                    // }
-                    // else{
-                        // console.log("Im okay")
-                    // }
+
+                // Health Management
+                this.onHurt((damage)=>{
+                    console.log(damage);
+                    this.enterState("invincible");
                 });
 
                 // States
-                this.onStateEnter("damage", (enemyPos)=>{
+                this.onStateEnter("damage", ()=>{
                     // console.log("Entered damage");
-                    console.log(enemyPos)
+                    console.log("damage")
                     this.enterState("invincible");
                 });
+
                 this.onStateEnter("invincible", ()=>{
                     // console.log("invincible");
-                    wait(200, ()=>this.enterState("normal"));
+                    // Can change if you want to add sprites
+                    this.color = RED
+                    wait(2.5, ()=>this.enterState("normal"));
                 });
+                this.onStateEnter("normal", ()=>{
+                    this.color = GREEN
+                    console.log("normal")
+                })
 
-                // this.onDeath(()=>{
-                //     k.go("end");
-                // })
 
             }
         }

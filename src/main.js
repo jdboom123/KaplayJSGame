@@ -1,5 +1,5 @@
 import kaplay from "kaplay";
-import {addFollowEnemy} from "./enemy.js"
+import {addFollowEnemy, enemyDamage} from "./enemy.js"
 import {addPlayer} from "./player.js"
 import {addBasicGun} from "./gun.js"
 
@@ -11,24 +11,55 @@ k.loadSprite("bean", "sprites/bean.png");
 
 scene("game", () => {
     const player = addPlayer(k, width()/2, k.height()/2, "bean");
-    const gun = addBasicGun(k, player)
+    const gun = addBasicGun(k, player);
+    const playerHealth = add([
+        text(player.hp())
+    ])
+    var collidingEnemy;
+    var invincibilityLock = false;
     console.log(player)
 
-    // let interval = setInterval(addFollowEnemy(), rand(2000,5000))
-    addFollowEnemy(k, player)
-    // player.onDeath(()=>{
-    //    console.log("Game Over")
-    // })
+    //Enemy spawning
 
+    const interval = setInterval(()=>{
+        if (k.get("enemy").length < 16){
+            const enemy = addFollowEnemy(k, player)
+        }
+    }, rand(1000,3000))
+
+    // const enemy1 = addFollowEnemy(k, player)
+    // const enemy2 = addFollowEnemy(k, player)
+
+    // Check if the player is colliding with anything continuously (using isColliding)
+    // Check if the player has invincibility
+    // Do damage if the player does not have invincibility
+    
+    player.onCollide((e) =>{
+        collidingEnemy = e;
+    })
+
+    player.onDeath(()=>{
+        go("end");
+        console.log("Game Over")
+    })
+
+    // Continual player logic
     onUpdate(() =>{
-        console.log(player.hp())
+        playerHealth.text = player.hp()
+        // console.log(invincibilityLock);
+        if (invincibilityLock == false && collidingEnemy != undefined && player.isColliding(collidingEnemy) && player.state == "normal" ){
+            console.log("Ow")
+            invincibilityLock = true;
+            let damage = enemyDamage(collidingEnemy.tags);
+            player.hurt(damage);
+            invincibilityLock = false;
+        }
     })
 });
 
 scene("end", ()=>{
     add(
-        text("Game over"),
-        scale(10)
+        [text("Game over"),]
     );
 });
 
