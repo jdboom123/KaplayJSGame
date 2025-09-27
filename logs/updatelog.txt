@@ -4,3 +4,5 @@
 - Added indicators for player health and the health of enemies
 - Added an enemyDamage map and function to map what kind of damage the player gets
 - Added infinite spawner for enemies (cap at 8 enemies)
+- Added walls to prevent bodies from going offscreen
+- Made it so that when bullets exit the screen, they get destroyed

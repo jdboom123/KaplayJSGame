@@ -32,6 +32,7 @@ export function addBasicGun(k, player){
                         move(gunTipPos.sub(gunHandlePos), BULLET_SPEED),
                         area(),
                         "bullet",
+                        offscreen({ destroy: true }),
                         {
                             add(){
                                 this.onCollide("enemy", (enemy)=>{

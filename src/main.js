@@ -15,6 +15,59 @@ scene("game", () => {
     const playerHealth = add([
         text(player.hp())
     ])
+
+    const topWall = add([
+        rect(width(), 5),
+        anchor("left"),
+        pos(0,0),
+        area(),
+        body(),
+        "environment",
+        {
+            add(){
+                this.isStatic = true;
+            }
+        }
+    ])
+    const bottomWall = add([
+        rect(width(), 5),
+        anchor("left"),
+        pos(0,height()),
+        area(),
+        body(),
+        "environment",
+        {
+            add(){
+                this.isStatic = true;
+            }
+        }
+    ])
+    const leftWall = add([
+        rect(5, height()),
+        anchor("top"),
+        pos(0,0),
+        area(),
+        body(),
+        "environment",
+        {
+            add(){
+                this.isStatic = true;
+            }
+        }
+    ])
+    const rightWall = add([
+        rect(5, height()),
+        anchor("top"),
+        pos(width(),0),
+        area(),
+        body(),
+        "environment",
+        {
+            add(){
+                this.isStatic = true;
+            }
+        }
+    ])
     var collidingEnemy;
     var invincibilityLock = false;
     console.log(player)
@@ -35,7 +88,9 @@ scene("game", () => {
     // Do damage if the player does not have invincibility
     
     player.onCollide((e) =>{
-        collidingEnemy = e;
+        if (e.tags.includes("environment") == false){
+            collidingEnemy = e;
+        }
     })
 
     player.onDeath(()=>{

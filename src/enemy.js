@@ -2,7 +2,7 @@ const damageMap = new Map();
 damageMap.set("basicEnemy", 10);
 
 export function addFollowEnemy(k, player){
-    const posX = rand(0, 100);
+    const posX = rand(0, 100 + (width()-100) * rand(0,1));
     const posY = rand(0, height());
     // We can probably change this so that the main game can choose where these enemies will spawn and then we can have like some kind of indicator or control where the 
     // enemies will spawn based on the player position
