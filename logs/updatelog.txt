@@ -6,3 +6,6 @@
 - Added infinite spawner for enemies (cap at 8 enemies)
 - Added walls to prevent bodies from going offscreen
 - Made it so that when bullets exit the screen, they get destroyed
+
+9/30/2025
+- Made a function that generates walls

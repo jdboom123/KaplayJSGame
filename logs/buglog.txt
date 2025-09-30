@@ -5,3 +5,12 @@ trying to make another function that will check if the player is invincible.
 RESOLVED: Fixed by having the main game account for this invicibility timer. The game will check
 if the player is colliding with an enemy, then check if the player is currently invincible, then apply
 damage accordingly (RESOLVED 9/27/2025)
+
+9/30/2025
+- New bug has appeared: When two enemies collide with the player and the player kills one of the enemies, there
+is no damage being done from the other enemy colliding with the player
+RESOLVED: Changed up the logic for colliding. Originally, main.js called player.onCollide, and tracking
+the current colliding object. Then, onUpdate checked if that colliding element is an enemy.
+Now, the logic is changed. player.onCollide is no longer used. The enemy damaged logic
+is handled by onUpdate using player.getCollisions, tracking all collisions. The same logic is 
+used to track the tags of the colliding element. 
